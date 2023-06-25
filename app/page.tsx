@@ -3,16 +3,21 @@ import Link from 'next/link'
 import {
   NEXT_PUBLIC_URL,
   NEXT_PUBLIC_SITE_TITLE,
-  NEXT_PUBLIC_SITE_DESCRIPTION
+  NEXT_PUBLIC_SITE_DESCRIPTION,
 } from './server-constants'
 import GoogleAnalytics from '../components/google-analytics'
 import styles from '../styles/page.module.css'
+
+export const revalidate = 60
+export const dynamic = 'force-dynamic'
 
 export async function generateMetadata(): Promise<Metadata> {
   const title = NEXT_PUBLIC_SITE_TITLE
   const description = NEXT_PUBLIC_SITE_DESCRIPTION
   const url = NEXT_PUBLIC_URL ? new URL(NEXT_PUBLIC_URL) : undefined
-  const images = NEXT_PUBLIC_URL ? [{ url: new URL('/default.png', NEXT_PUBLIC_URL) }] : []
+  const images = NEXT_PUBLIC_URL
+    ? [{ url: new URL('/default.png', NEXT_PUBLIC_URL) }]
+    : []
 
   const metadata: Metadata = {
     openGraph: {

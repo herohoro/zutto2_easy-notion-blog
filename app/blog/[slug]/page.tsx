@@ -1,9 +1,6 @@
 import type { Metadata } from 'next'
 import { redirect } from 'next/navigation'
-import {
-  NEXT_PUBLIC_URL,
-  NEXT_PUBLIC_SITE_TITLE,
-} from '../../server-constants'
+import { NEXT_PUBLIC_URL, NEXT_PUBLIC_SITE_TITLE } from '../../server-constants'
 import { Post } from '../../../lib/notion/interfaces'
 import GoogleAnalytics from '../../../components/google-analytics'
 import {
@@ -29,13 +26,18 @@ import {
 } from '../../../lib/notion/client'
 
 export const revalidate = 30
+export const dynamic = 'force-static'
 
 export async function generateMetadata({ params }): Promise<Metadata> {
   const post = await getPostBySlug(params.slug)
   const title = `${post?.Title} - ${NEXT_PUBLIC_SITE_TITLE}`
   const description = post?.Excerpt
-  const url = NEXT_PUBLIC_URL ? new URL(getBlogLink(post?.Slug || ''), NEXT_PUBLIC_URL) : undefined
-  const images = NEXT_PUBLIC_URL ? [{ url: new URL(`/api/og-image?slug=${post?.Slug}`, NEXT_PUBLIC_URL) }] : []
+  const url = NEXT_PUBLIC_URL
+    ? new URL(getBlogLink(post?.Slug || ''), NEXT_PUBLIC_URL)
+    : undefined
+  const images = NEXT_PUBLIC_URL
+    ? [{ url: new URL(`/api/og-image?slug=${post?.Slug}`, NEXT_PUBLIC_URL) }]
+    : []
 
   const metadata: Metadata = {
     title: title,
@@ -64,7 +66,7 @@ export async function generateMetadata({ params }): Promise<Metadata> {
 
 export async function generateStaticParams() {
   const posts = await getAllPosts()
-  return posts.map(p => ({ slug: p.Slug }))
+  return posts.map((p) => ({ slug: p.Slug }))
 }
 
 const BlogSlugPage = async ({ params: { slug } }) => {
@@ -75,21 +77,18 @@ const BlogSlugPage = async ({ params: { slug } }) => {
     redirect('/blog')
   }
 
-  const [
-    blocks,
-    rankedPosts,
-    recentPosts,
-    tags,
-    sameTagPosts,
-  ] = await Promise.all([
-    getAllBlocksByBlockId(post.PageId),
-    getRankedPosts(),
-    getPosts(5),
-    getAllTags(),
-    getPostsByTag(post.Tags[0]?.name, 6),
-  ])
+  const [blocks, rankedPosts, recentPosts, tags, sameTagPosts] =
+    await Promise.all([
+      getAllBlocksByBlockId(post.PageId),
+      getRankedPosts(),
+      getPosts(5),
+      getAllTags(),
+      getPostsByTag(post.Tags[0]?.name, 6),
+    ])
 
-  const otherPostsHavingSameTag = sameTagPosts.filter((p: Post) => p.Slug !== post.Slug)
+  const otherPostsHavingSameTag = sameTagPosts.filter(
+    (p: Post) => p.Slug !== post.Slug
+  )
 
   return (
     <>
