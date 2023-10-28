@@ -16,7 +16,7 @@
     }
   },
   "dependencies": {
-    "@notionhq/client": "^2.2.2",
+    "@notionhq/client": "^2.2.13",
     "@vercel/og": "^0.0.21",
     "axios": "^1.2.1",
     "got": "^12.5.3",
