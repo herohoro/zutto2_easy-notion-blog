@@ -1,14 +1,11 @@
 const fs = require('fs')
 const path = require('path')
-const {
-  NOTION_API_SECRET,
-  DATABASE_ID,
-} = require('./app/server-constants')
+const { NOTION_API_SECRET, DATABASE_ID } = require('./app/server-constants')
 
 const warnOrError =
   process.env.NODE_ENV !== 'production' || process.env.GITHUB_ACTIONS
     ? console.warn
-    : msg => {
+    : (msg) => {
         throw new Error(msg)
       }
 
@@ -32,7 +29,16 @@ if (!DATABASE_ID) {
 
 module.exports = {
   images: {
-    domains: ['s3.us-west-2.amazonaws.com', 'images.unsplash.com'],
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 's3.us-west-2.amazonaws.com',
+      },
+      {
+        protocol: 'https',
+        hostname: 'images.unsplash.com',
+      },
+    ],
   },
 
   outputFileTracing: false,
