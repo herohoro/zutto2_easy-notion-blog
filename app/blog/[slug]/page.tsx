@@ -2,7 +2,6 @@ import type { Metadata } from 'next'
 import { redirect } from 'next/navigation'
 import { NEXT_PUBLIC_URL, NEXT_PUBLIC_SITE_TITLE } from '../../server-constants'
 import { Post } from '../../../lib/notion/interfaces'
-import GoogleAnalytics from '../../../components/google-analytics'
 import {
   BlogPostLink,
   BlogTagLink,
@@ -92,7 +91,6 @@ const BlogSlugPage = async ({ params: { slug } }) => {
 
   return (
     <>
-      <GoogleAnalytics pageTitle={post.Title} />
       <div className={styles.container}>
         <div className={styles.mainContent}>
           <div className={styles.post}>
