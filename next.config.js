@@ -1,5 +1,3 @@
-const fs = require('fs')
-const path = require('path')
 const { NOTION_API_SECRET, DATABASE_ID } = require('./app/server-constants')
 
 const warnOrError =
