@@ -2,8 +2,8 @@ import {
   NEXT_PUBLIC_URL,
   NEXT_PUBLIC_SITE_TITLE,
   NEXT_PUBLIC_SITE_DESCRIPTION,
+  NEXT_PUBLIC_GA_TRACKING_ID,
 } from './server-constants'
-import { NEXT_PUBLIC_GA_TRACKING_ID } from './server-constants'
 import { GoogleAnalytics } from '@next/third-parties/google'
 import Header from '../components/header'
 import Footer from '../components/footer'
