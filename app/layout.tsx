@@ -26,7 +26,9 @@ const RootLayout = ({ children }: { children: React.ReactNode }) => (
         <Footer />
       </div>
     </body>
-    <GoogleAnalytics gaId={NEXT_PUBLIC_GA_TRACKING_ID} />
+    {NEXT_PUBLIC_GA_TRACKING_ID ? (
+      <GoogleAnalytics gaId={NEXT_PUBLIC_GA_TRACKING_ID} />
+    ) : undefined}
   </html>
 )
 
