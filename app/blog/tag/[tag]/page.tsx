@@ -6,7 +6,6 @@ import {
   NEXT_PUBLIC_SITE_DESCRIPTION,
   NUMBER_OF_POSTS_PER_PAGE,
 } from '../../../../app/server-constants'
-import GoogleAnalytics from '../../../../components/google-analytics'
 import {
   BlogPostLink,
   BlogTagLink,
@@ -30,12 +29,16 @@ import '../../../../styles/notion-color.css'
 
 export const revalidate = 60
 
-export async function generateMetadata({ params: { tag: encodedTag } }): Promise<Metadata> {
+export async function generateMetadata({
+  params: { tag: encodedTag },
+}): Promise<Metadata> {
   const tag = decodeURIComponent(encodedTag)
   const title = `Posts in ${tag} - ${NEXT_PUBLIC_SITE_TITLE}`
   const description = NEXT_PUBLIC_SITE_DESCRIPTION
   const url = NEXT_PUBLIC_URL ? new URL('/blog', NEXT_PUBLIC_URL) : undefined
-  const images = NEXT_PUBLIC_URL ? [{ url: new URL('/default.png', NEXT_PUBLIC_URL) }] : []
+  const images = NEXT_PUBLIC_URL
+    ? [{ url: new URL('/default.png', NEXT_PUBLIC_URL) }]
+    : []
 
   const metadata: Metadata = {
     title: title,
@@ -63,7 +66,7 @@ export async function generateMetadata({ params: { tag: encodedTag } }): Promise
 
 export async function generateStaticParams() {
   const tags = await getAllTags()
-  return tags.map(tag => ({ tag: tag.name }))
+  return tags.map((tag) => ({ tag: tag.name }))
 }
 
 const BlogTagPage = async ({ params: { tag: encodedTag } }) => {
@@ -82,18 +85,21 @@ const BlogTagPage = async ({ params: { tag: encodedTag } }) => {
     getAllTags(),
   ])
 
-  const currentTag = posts[0].Tags.find(t => t.name === tag)
+  const currentTag = posts[0].Tags.find((t) => t.name === tag)
 
   return (
     <>
-      <GoogleAnalytics pageTitle={`Posts in ${tag}`} />
       <div className={styles.container}>
         <div className={styles.mainContent}>
           <header>
-            <h2><span className={`tag ${colorClass(currentTag.color)}`}>{tag}</span></h2>
+            <h2>
+              <span className={`tag ${colorClass(currentTag.color)}`}>
+                {tag}
+              </span>
+            </h2>
           </header>
 
-          {posts.map(post => {
+          {posts.map((post) => {
             return (
               <div className={styles.post} key={post.Slug}>
                 <PostDate post={post} />
