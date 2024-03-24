@@ -22,6 +22,7 @@ const SocialButtons = ({ title = '', url, id = null }) => (
         title={title}
         beforeOnClick={() =>
           sendGAEvent({
+            event: 'share',
             method: 'twitter',
             contentType: 'article',
             itemId: id,
@@ -36,6 +37,7 @@ const SocialButtons = ({ title = '', url, id = null }) => (
         url={url}
         beforeOnClick={() =>
           sendGAEvent({
+            event: 'share',
             method: 'facebook',
             contentType: 'article',
             itemId: id,
@@ -51,6 +53,7 @@ const SocialButtons = ({ title = '', url, id = null }) => (
         title={title}
         beforeOnClick={() =>
           sendGAEvent({
+            event: 'share',
             method: 'pocket',
             contentType: 'article',
             itemId: id,
@@ -66,6 +69,7 @@ const SocialButtons = ({ title = '', url, id = null }) => (
         title={title}
         beforeOnClick={() =>
           sendGAEvent({
+            event: 'share',
             method: 'hatena',
             contentType: 'article',
             itemId: id,
