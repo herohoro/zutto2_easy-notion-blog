@@ -30,9 +30,14 @@ import '../../../../../../styles/notion-color.css'
 
 export const revalidate = 3600
 
-export async function generateMetadata({
-  params: { date: encodedDate, tag: encodedTag },
-}): Promise<Metadata> {
+export async function generateMetadata(props): Promise<Metadata> {
+  const params = await props.params;
+
+  const {
+    date: encodedDate,
+    tag: encodedTag
+  } = params;
+
   const date = decodeURIComponent(encodedDate)
   const tag = decodeURIComponent(encodedTag)
   const title = `Posts in ${tag} before ${
@@ -68,9 +73,14 @@ export async function generateMetadata({
   return metadata
 }
 
-const BlogTagBeforeDatePage = async ({
-  params: { tag: encodedTag, date: encodedDate },
-}) => {
+const BlogTagBeforeDatePage = async props => {
+  const params = await props.params;
+
+  const {
+    tag: encodedTag,
+    date: encodedDate
+  } = params;
+
   const tag = decodeURIComponent(encodedTag)
   const date = decodeURIComponent(encodedDate)
 
