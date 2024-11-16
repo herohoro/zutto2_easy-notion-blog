@@ -29,9 +29,13 @@ import '../../../../styles/notion-color.css'
 
 export const revalidate = 60
 
-export async function generateMetadata({
-  params: { tag: encodedTag },
-}): Promise<Metadata> {
+export async function generateMetadata(props): Promise<Metadata> {
+  const params = await props.params;
+
+  const {
+    tag: encodedTag
+  } = params;
+
   const tag = decodeURIComponent(encodedTag)
   const title = `Posts in ${tag} - ${NEXT_PUBLIC_SITE_TITLE}`
   const description = NEXT_PUBLIC_SITE_DESCRIPTION
@@ -69,7 +73,13 @@ export async function generateStaticParams() {
   return tags.map((tag) => ({ tag: tag.name }))
 }
 
-const BlogTagPage = async ({ params: { tag: encodedTag } }) => {
+const BlogTagPage = async props => {
+  const params = await props.params;
+
+  const {
+    tag: encodedTag
+  } = params;
+
   const tag = decodeURIComponent(encodedTag)
 
   const posts = await getPostsByTag(tag, NUMBER_OF_POSTS_PER_PAGE)

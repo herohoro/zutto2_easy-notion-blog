@@ -27,9 +27,13 @@ import styles from '../../../../styles/blog.module.css'
 
 export const revalidate = 3600
 
-export async function generateMetadata({
-  params: { date: encodedDate },
-}): Promise<Metadata> {
+export async function generateMetadata(props): Promise<Metadata> {
+  const params = await props.params;
+
+  const {
+    date: encodedDate
+  } = params;
+
   const date = decodeURIComponent(encodedDate)
   const title = `Post before ${date.split('T')[0]} - ${NEXT_PUBLIC_SITE_TITLE}`
   const description = NEXT_PUBLIC_SITE_DESCRIPTION
@@ -62,7 +66,13 @@ export async function generateMetadata({
   return metadata
 }
 
-const BlogBeforeDatePage = async ({ params: { date: encodedDate } }) => {
+const BlogBeforeDatePage = async props => {
+  const params = await props.params;
+
+  const {
+    date: encodedDate
+  } = params;
+
   const date = decodeURIComponent(encodedDate)
 
   if (!Date.parse(date) || !/^\d{4}-\d{2}-\d{2}/.test(date)) {
